@@ -46,7 +46,7 @@ const deleteGoods = async (req, res) => {
 
     const result = await Goods.destroy({ where: { id } });
 
-    return wrapper.successResponse(res, result, "Success", 200);
+    return wrapper.successResponse(res, null, "Success delete goods", 200);
   } catch (error) {
     return wrapper.errorResponse(res, error.message, 400);
   }

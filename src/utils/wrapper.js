@@ -1,7 +1,9 @@
-const errorResponse = (res, message, statusCode = 500) => {
+const errorResponse = (res, message, statusCode = 500, error = null) => {
   return res.status(statusCode).json({
     status: "error",
     message,
+    code: statusCode,
+    errorDetail: error,
   });
 };
 
