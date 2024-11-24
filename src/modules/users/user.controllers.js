@@ -1,6 +1,7 @@
 const Users = require("./users.model");
 const bcrypt = require("bcryptjs");
 const wrapper = require("../../utils/wrapper");
+const { generateToken } = require("../../middlewares/jwt");
 
 const login = async (req, res) => {
   try {
@@ -12,7 +13,9 @@ const login = async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) throw new Error("Invalid password");
 
-    return wrapper.successResponse(res, user, "Login success", 200);
+    const token = generateToken({ id: user.dataValues.id });
+
+    return wrapper.successResponse(res, { token }, "Login success", 200);
   } catch (error) {
     return wrapper.errorResponse(res, error.message, 400);
   }
