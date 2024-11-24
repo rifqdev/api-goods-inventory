@@ -1,6 +1,7 @@
 const express = require("express");
 const package = require("./package.json");
 const app = express();
+const cors = require("cors");
 const PORT = process.env.PORT || 3000;
 
 const sequelize = require("./src/config/sequelize");
@@ -11,6 +12,8 @@ sequelize.testConnection();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes);
+
+app.use(cors({ origin: process.env.FRONTEND_URL }));
 
 app.use("/", (req, res) => {
   res.json({
